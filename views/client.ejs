@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Yes No Game: Admin</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  
+  Hello, <%= user.name %>
+  <form method="post" id="" action="">
+    <div id="">
+      <% if (answer !== null) { %>
+      <div><%= answer %> で投票されました</div>
+      <% } %>
+
+      Yes <input type="radio" name="answer" value="Yes" /> / 
+      <input type="radio" name="answer" value="No" /> No 
+    </div>
+    <input type="submit" name="submit" value="送信" />
+  </form>
+  </body>
+</html>
