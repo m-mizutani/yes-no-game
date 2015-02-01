@@ -6,9 +6,8 @@ $(document).ready(function() {
     socket.emit('my other event', { my: 'data' });
   });
 */
-  $('#send_btn').click(function() {
-    console.log('send');
-    socket.emit('event', {name: 'setq', data: $('#question').val()});    
+  $('button.send_btn').click(function() {
+    socket.emit('event', {name: 'setq', data: this.id});
   });
   $('#start_btn').click(function() {
     socket.emit('event', {name: 'start'});

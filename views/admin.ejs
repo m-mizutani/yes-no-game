@@ -9,9 +9,17 @@
   </head>
   <body>
     <h1>Admin</h1>
-    Q: <input type="text" id="question" size=50/>    
-    <button id="send_btn">Send</button>
-    <button id="start_btn">Start</button>
-    <button id="reset_btn">Reset</button>
+
+    <% for (var i in q) { %>
+    <div>
+      Q: <%= q[i].q %>
+      <button  id="<%= i %>" class="send_btn">Send</button>
+    </div>
+
+    <% } %>
+    <div>
+      <button id="start_btn">Start</button>
+      <button id="reset_btn">Reset</button>
+    </div>
   </body>
 </html>
