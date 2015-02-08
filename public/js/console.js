@@ -1,13 +1,14 @@
-function show_countdown(sock, remain) {  
+function show_countdown(sock, remain) {
+  remain *= 10;
   var int_id = setInterval(function() {
-    $('#countdown').text('後' + remain + '秒');
+    $('#countdown').text('後 ' + Math.floor(remain / 10) + "." + (remain % 10) + '秒')    
     remain--;
     if (remain <= 0) {
       clearInterval(int_id);
       $('#countdown').text('終了');
       sock.emit('event', {name: 'end'});
     }
-  }, 1000);
+  }, 100);
 }
 
 $(document).ready(function() {
@@ -16,12 +17,16 @@ $(document).ready(function() {
     console.log(ev);
     switch (ev.name) {
     case 'setq':
+      $('#image').empty();
       $('#choices').empty();
       $('ul#result').empty();
-      $('#question').text(ev.data.q);
+      $('#countdown').empty();
+
+      $('#image').append('<img src="' + ev.data.img + '"/>');
+      $('#question').text("問題 " + ev.data.q);
       for (var c in ev.data.c) {
-        $('#choices').append('<li id="' + c + '">' + ev.data.c[c] +
-                             ' <span class="count" id="' + c + '"></span></li>');
+        $('#choices').append('<li id="' + c + '">' + c + ': ' +
+                             ev.data.c[c] + ' <span class="count" id="' + c + '"></span></li>');
       }
       // socket.emit('my other event', { my: 'data' });
       break;
@@ -42,6 +47,7 @@ $(document).ready(function() {
       }
     }
     p.sort(function(a, b) { return a.ts - b.ts; });
+    console.log(p);
     $('ul#result').empty();
     for (var i = 0; i < p.length; i++) {
       $('ul#result').append('<li>' + p[i].user + ': ' + p[i].ts / 1000 + '秒</li>');

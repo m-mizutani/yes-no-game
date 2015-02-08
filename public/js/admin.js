@@ -16,5 +16,8 @@ $(document).ready(function() {
     console.log('reset');
     socket.emit('event', {name: 'reset'});
   });
+  $('#result_btn').click(function() {
+    socket.emit('event', {name: 'result'});
+  });
 
 });

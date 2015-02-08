@@ -2,7 +2,8 @@
 <html>
   <head>
     <title>Yes No Game</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/css/cssreset-min.css">
+    <link rel="stylesheet" href="/css/console.css" />
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
@@ -10,10 +11,16 @@
     
   </head>
   <body>
-    <h1>クイズ</h1>
-    <div id="question"></div>
-    <ul id="choices"></ul>
-    <div id="countdown"></div>
-    <ul id="result"></ul>
+    <div class="debug"></div>
+    <div id="main">
+      <h1>クイズ</h1>
+      <div id="content">
+	<div id="image"></div>
+	<div id="question"></div>
+	<ul id="choices"></ul>
+	<div id="countdown"></div>
+	<ul id="result"></ul>
+      </div>
+    </div>
   </body>
 </html>

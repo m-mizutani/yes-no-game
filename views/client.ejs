@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Yes No Game: Admin</title>
+    <title>Happy Quiz</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
   
-  Hello, <%= user.name %>
+  <%= user.name %>さん
     <div id="">
 
       <% if (q !== undefined) { %>
       <h2><%= q.q %></h2>
-      <% if (answer !== null) { %>
+      <% if (answer !== undefined && answer !== null) { %>
       <div><%= q.c[answer] %> で投票されました</div>
       <% } %>
 
