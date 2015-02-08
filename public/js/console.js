@@ -32,7 +32,7 @@ $(document).ready(function() {
       break;
 
     case 'start':
-      show_countdown(socket, 20);
+      show_countdown(socket, 60);
       break;
     }
   });
