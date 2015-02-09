@@ -28,6 +28,7 @@ function event_handler(msg) {
   case 'setq':
     reset_data(); 
     current_q = questions[msg.data];
+    current_q.qid = msg.data;
     socketio.sockets.emit('event', {name: 'setq', data: questions[msg.data]});
     return false;
 
@@ -157,7 +158,7 @@ router.get('/c/:cid([0-9A-Z]+)', function(req, res) {
       socketio.sockets.emit('update', answer_buf);
     }
     res.render('client', {user: users[cid], answer: answer,
-                          q: current_q});
+                          cid: cid, q: current_q});
       
   } else {
     res.render('error', {messages: 'Invalid user ID'});
