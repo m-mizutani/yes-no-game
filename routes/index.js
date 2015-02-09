@@ -1,4 +1,6 @@
 var express = require('express');
+var msgpack = require('msgpack');
+
 var router = express.Router();
 
 var socketio;

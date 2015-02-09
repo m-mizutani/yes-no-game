@@ -24,5 +24,15 @@
       </ul>
      <% } %>
     </div>
+    
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect(location.protocol + '//' + location.host);
+      if (socket !== undefined) {
+      socket.on('event', function (ev) {
+      if (ev.name === 'setq') {
+      location.href = location.protocol + '//' + location.host + '/c/<%= cid %>'; }
+      });}
+    </script>
   </body>  
 </html>

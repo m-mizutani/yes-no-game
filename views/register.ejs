@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Happy Quiz</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+  </head>
+  <body>
+    お名前を入力してください
+    <form method="post">
+      <% if(user.name !== undefined) { %>
+      <input type="text" name="name" value="<%= user.name %>">
+      <% } else { %>
+      <input type="text" name="name" value="">
+      <% } %>
+      <input type="submit" value="設定" />
+    </form>
+  </body>  
+</html>
