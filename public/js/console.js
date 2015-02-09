@@ -27,9 +27,9 @@ $(document).ready(function() {
       for (var c in ev.data.c) {
         var choice = '<li id="' + c + '"><div class="c_title">' + c + ': ' +
             ev.data.c[c] +
-            ' <span class="count" id="' + c + '"></span>' +
-            '</div><div>kiss</div></li>';
+            '</div><div id="' + c + '"></div></li>';
         $('#choices').append(choice);
+        
       }
       // socket.emit('my other event', { my: 'data' });
       break;

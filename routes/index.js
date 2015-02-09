@@ -8,11 +8,15 @@ var socketio;
 var answer_buf;
 var current_q;
 var start_ts;
-
+var score_board;
 function reset_data() {
   answer_buf = {};
 }
+function reset_score() {
+  score_board = {};
+}
 reset_data();
+reset_score();
 
 function event_handler(msg) {
   console.log(msg);
@@ -39,6 +43,10 @@ function event_handler(msg) {
   case 'start':
     start_ts = new Date().getTime();
     break;
+
+  case 'reset':
+    reset_score();
+    return false;
   }
 
   return true;
