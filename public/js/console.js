@@ -27,7 +27,8 @@ $(document).ready(function() {
       for (var c in ev.data.c) {
         var choice = '<li id="' + c + '"><div class="c_title">' + c + ': ' +
             ev.data.c[c] +
-            '</div><div id="' + c + '"></div></li>';
+            '</div><meter class="bar" id="' + c + '" value="1"></meter>' +
+            '</li>';
         $('#choices').append(choice);
         
       }
@@ -68,9 +69,10 @@ $(document).ready(function() {
     }
 
     var txt = [];
-    $('span.count').text('');
+    $('meter').css('width', '0px');
     for (var a in summary) {
-      $('span.count#' + a).text(summary[a] + '人');
+      $('meter#' + a).css('width', (summary[a] * 5) + 'px');
+      // $('span.count#' + a).text(summary[a] + '人');
     }
 
     console.log(msg);

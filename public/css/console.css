@@ -32,16 +32,29 @@ div#content {
 ul#choices li {
     clear: both;
     line-height: 1em;
+    padding: 10px;
 }
 div.c_title {
     text-align: right;
-    margin: 10px 20px 10px 0px;
+    margin: 0px 20px 10px 0px;
     float: left;
     width: 600px;
 }
+meter.bar {
+    width: 0px;
+    -webkit-appearance: none; 
+    background-color: #f00;
+    background-image: -webkit-gradient(
+			      linear,
+			      left top,
+			      left bottom,
+			      from(#ffafaf),
+			      to(#f00)
+			  );
+}
 
 div#question {
-    font-size: 36pt;
+    font-size: 32pt;
     margin: 10px;
     font-weight: bold;
     text-align: center;
