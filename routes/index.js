@@ -128,16 +128,12 @@ var questions = {
 // router.param('cid', /^[0-9A-Z]+$/);
 var users = {
   user1: {
-    name: 'Yutaka',
   },
   user2: {
-    name: 'Yoshiki',
   },
   user3: {
-    name: 'Kaoruko',
   },
   user4: {
-    name: 'Masa',
   }
 };
 
@@ -147,24 +143,43 @@ router.get('/', function(req, res) {
   res.render('index', {q: questions});
 });
 
+// 問題表示 & 回答
 router.get('/c/:cid([0-9A-Z]+)', function(req, res) {
   var cid = req.params.cid;
+  console.log(users[cid]);
   if (users[cid] !== undefined) {
-    var answer = req.param('a');
-    if (current_q !== undefined && current_q.c[answer] !== undefined &&
-        start_ts !== undefined) {
-      var ts = new Date().getTime();
-      answer_buf[cid] = {answer: answer, ts: ts - start_ts};
-      socketio.sockets.emit('update', answer_buf);
+    if (users[cid].name === undefined || req.param('r') !== undefined) {
+      // name registration form
+      res.render('register', {user: users[cid], cid: cid});
+    } else {
+      var answer = req.param('a');
+      if (current_q !== undefined && current_q.c[answer] !== undefined &&
+          start_ts !== undefined) {
+        var ts = new Date().getTime();
+        answer_buf[cid] = {answer: answer, ts: ts - start_ts};
+        socketio.sockets.emit('update', answer_buf);
+      }
+      res.render('client', {user: users[cid], answer: answer,
+                            cid: cid, q: current_q});
     }
-    res.render('client', {user: users[cid], answer: answer,
-                          cid: cid, q: current_q});
-      
   } else {
-    res.render('error', {messages: 'Invalid user ID'});
-  }
+    res.render('error', {messages: '不正なURLです。URLを確認してください'});
+  }  
+});
 
-  
+// 名前設定
+router.post('/c/:cid([0-9A-Z]+)', function(req, res) {
+  var cid = req.params.cid;
+  if (users[cid] !== undefined) {
+    var name = req.param('name');
+    console.log(name);
+    users[cid].name = name;
+    res.render('client', {user: users[cid], answer: undefined,
+                          cid: cid, q: current_q});
+  } else {
+    res.render('error', {messages: '不正なURLです。URLを確認してください'});
+  }  
+  console.log(req.params);
 });
 
 router.get('/admin', function(req, res) {
