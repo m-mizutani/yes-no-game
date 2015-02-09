@@ -25,8 +25,11 @@ $(document).ready(function() {
       $('#image').append('<img src="' + ev.data.img + '"/>');
       $('#question').text("問題 " + ev.data.q);
       for (var c in ev.data.c) {
-        $('#choices').append('<li id="' + c + '">' + c + ': ' +
-                             ev.data.c[c] + ' <span class="count" id="' + c + '"></span></li>');
+        var choice = '<li id="' + c + '"><div class="c_title">' + c + ': ' +
+            ev.data.c[c] +
+            ' <span class="count" id="' + c + '"></span>' +
+            '</div><div>kiss</div></li>';
+        $('#choices').append(choice);
       }
       // socket.emit('my other event', { my: 'data' });
       break;
