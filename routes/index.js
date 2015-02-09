@@ -1,5 +1,6 @@
 var express = require('express');
 var msgpack = require('msgpack');
+var fs = require('fs');
 
 var router = express.Router();
 
@@ -126,18 +127,22 @@ var questions = {
 
 
   
-/* GET client */
 // router.param('cid', /^[0-9A-Z]+$/);
-var users = {
-  user1: {
-  },
-  user2: {
-  },
-  user3: {
-  },
-  user4: {
+var users = {};
+function load_client_id() {
+  var raw_data;
+  var data_path = 'data/id_list.txt';
+  var testdata_path = 'data/id_list_test.txt';
+  if (fs.existsSync(data_path)) {
+    raw_data = fs.readFileSync(data_path);
+  } else {
+    console.log('NOTE: loading test data: ' + testdata_path);
+    raw_data = fs.readFileSync(testdata_path);
   }
-};
+  var id_list = raw_data.toString().split(/\n/);
+  id_list.forEach(function(cid) { if (cid.length > 0) {users[cid] = {}; }});
+}
+load_client_id();
 
 
 /* GET console */
