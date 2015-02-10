@@ -22,7 +22,8 @@ function event_handler(msg) {
   console.log(msg);
   switch(msg.name) {
   case 'result':
-    socketio.sockets.emit('result', {result: answer_buf, correct: current_q.a});
+    socketio.sockets.emit('result', {result: answer_buf, users: users,
+                                     correct: current_q.a});
     return false;
     
   case 'end':
@@ -106,12 +107,12 @@ var questions = {
     {q: 'キノコ嫌いのしょうた君が大丈夫だったキノコ科の食べ物はなんでしょう？',
     c: {A: '松茸', B: ' エリンギ', C: 'マイタケ', D: 'キクラゲ'},
     a: 'D',
-    img: ''},
+    img: 'http://www.showanavi.jp/archive/archive/images/7176.jpg'},
   q6: 
     {q: 'しょうた君がなつかさんにプロポーズをしたときに、図らずも証人となった動物とは？',
     c: {A: '猫', B: 'セントバーナード', C: '野うさぎ', D: '白鳥'},
     a: 'A',
-    img: ''},
+    img: 'http://ubuntu.firebird.jp/wp-content/uploads/2012/04/koshachya-molitva.jpg'},
   q7: 
     {q: '告白したのはどこでしょう？',
     c: {
@@ -121,7 +122,7 @@ var questions = {
     D: 'IBM同期の水谷さんのお家'
     },
     a: 'B',
-    img: ''},
+    img: 'http://invisible-one.tokyo/wp/wp-content/uploads/2014/11/blog-love.jpg'},
   q8: 
     {q: 'このシステムの開発にかかった期間はどれくらいでしょう？',
     c: {
@@ -131,7 +132,7 @@ var questions = {
     D: '一年'
     },
     a: 'A',
-    img: ''},
+    img: 'http://livedoor.blogimg.jp/nnt_boy/imgs/a/3/a32ffca5.png'},
   };
 
 
@@ -189,7 +190,7 @@ router.post('/c/:cid([0-9A-Z]+)', function(req, res) {
   if (users[cid] !== undefined) {
     var name = req.param('name');
     console.log(name);
-    users[cid].name = name;
+    users[cid].name = name.slice(0, 16);
     res.render('client', {user: users[cid], answer: undefined,
                           cid: cid, q: current_q});
   } else {

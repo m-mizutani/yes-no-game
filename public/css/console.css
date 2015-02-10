@@ -14,17 +14,36 @@ body {
     height: 768px;
 }
 
-div#main {
-    padding: 10px;
-}
 
 h1 {
     font-weight: bold;
     font-size: 24pt;
     text-align: center;
+    background: #d04255; /* Old browsers */
+    background: -moz-linear-gradient(top,  #d04255 0%, #e38692 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d04255), color-stop(100%,#e38692)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #d04255 0%,#e38692 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #d04255 0%,#e38692 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #d04255 0%,#e38692 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #d04255 0%,#e38692 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d04255', endColorstr='#e38692',GradientType=0 ); /* IE6-9 */
+
+    color: #F6D4D8;
 }
 
-div#content {
+div#status {
+    position: absolute;
+    z-index: -1;
+    top: 50px;
+    right: 50px;
+    width:  300px;
+    height: 200px;
+    font-size: 36pt;
+    font-weight: bold;
+    text-align: right;
+}
+
+div.content {
     font-size: 28pt;
     padding: 0px 50px 20px 50px;
 }
@@ -44,13 +63,6 @@ meter.bar {
     width: 0px;
     -webkit-appearance: none; 
     background-color: #f00;
-    background-image: -webkit-gradient(
-			      linear,
-			      left top,
-			      left bottom,
-			      from(#ffafaf),
-			      to(#f00)
-			  );
 }
 
 div#question {
@@ -63,5 +75,32 @@ div#image {
     text-align: center;
 }
 div#image img {
+    margin: 10px;
     height: 300px;
+}
+
+ul#ranker {
+    margin-left: 30px;
+    font-size: 20pt;
+}
+ul#ranker li {
+    display: none;
+    overflow-x: hidden;
+}
+div#result {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: #E38692 solid 2px;
+    z-index: 10;
+    top: 100px;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+}
+div#result h2 {
+    text-align: center;
+    margin: 10px;
+    font-size: 36pt;
+    font-weight: bold;
 }

@@ -1,11 +1,11 @@
 function show_countdown(sock, remain) {
   remain *= 10;
   var int_id = setInterval(function() {
-    $('#countdown').text('後 ' + Math.floor(remain / 10) + "." + (remain % 10) + '秒')    
+    $('#status').text('残り ' + Math.floor(remain / 10) + "." + (remain % 10) + '秒')    
     remain--;
     if (remain <= 0) {
       clearInterval(int_id);
-      $('#countdown').text('終了');
+      $('#status').text('終了！');
       sock.emit('event', {name: 'end'});
     }
   }, 100);
@@ -20,8 +20,9 @@ $(document).ready(function() {
       $('#image').empty();
       $('#choices').empty();
       $('ul#result').empty();
-      $('#countdown').empty();
-
+      $('#status').empty();
+      $('div#result').css('display', 'none');
+      
       $('#image').append('<img src="' + ev.data.img + '"/>');
       $('#question').text("問題 " + ev.data.q);
       for (var c in ev.data.c) {
@@ -30,9 +31,7 @@ $(document).ready(function() {
             '</div><meter class="bar" id="' + c + '" value="1"></meter>' +
             '</li>';
         $('#choices').append(choice);
-        
       }
-      // socket.emit('my other event', { my: 'data' });
       break;
 
     case 'start':
@@ -43,19 +42,35 @@ $(document).ready(function() {
 
   socket.on('result', function (msg) {
     console.log(msg);
-    var c = msg.correct;
+    var correct = msg.correct;
     var p = [];
     for (var k in msg.result) {
-      if (msg.result[k].answer === c) {
-        p.push({user: k, ts: msg.result[k].ts});
+      if (msg.result[k].answer === correct) {
+        p.push({user: msg.users[k].name, ts: msg.result[k].ts});
       }
     }
     p.sort(function(a, b) { return a.ts - b.ts; });
     console.log(p);
-    $('ul#result').empty();
-    for (var i = 0; i < p.length; i++) {
-      $('ul#result').append('<li>' + p[i].user + ': ' + p[i].ts / 1000 + '秒</li>');
-    }
+    
+    $('div#result div#ranker').empty();
+    $('div#result').animate({height: 'show'}, 1000);
+
+    setTimeout(function() {
+      $('span#correct').text(correct);
+      var ranker = p.slice(0, 10);
+      var int_id = setInterval(function() {
+        console.log(ranker);
+        if (ranker.length > 0) {
+          var u = ranker.pop();
+          var li_id = 'rank_' + ranker.length;
+          $('ul#ranker').prepend('<li id="' + li_id + '">' +
+                                 u.user + ': ' + u.ts / 1000 + '秒</li>');
+          $('li#' + li_id).fadeIn(1000);
+        } else {
+          clearInterval(int_id);
+        }
+      }, 1000);
+    }, 3000);
   });
   
   socket.on('update', function (msg) {
