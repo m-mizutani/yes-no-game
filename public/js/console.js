@@ -53,6 +53,7 @@ $(document).ready(function() {
     console.log(p);
     
     $('div#result div#ranker').empty();
+    $('span#correct').text('');
     $('div#result').animate({height: 'show'}, 1000);
 
     setTimeout(function() {

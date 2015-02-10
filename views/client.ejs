@@ -13,8 +13,8 @@
 
       <% if (q !== undefined) { %>
       <h2><%= q.q %></h2>
-      <% if (answer !== undefined && answer !== null) { %>
-      <div><%= q.c[answer] %> で投票されました</div>
+      <% if (msg !== undefined) { %>
+      <div><%= msg %></div>
       <% } %>
 
       <ul>
@@ -22,7 +22,7 @@
       <li><a href="?a=<%= i %>"><%= q.c[i] %></a></li>
       <% } %>
       </ul>
-     <% } %>
+      <% } %>
     </div>
     
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>

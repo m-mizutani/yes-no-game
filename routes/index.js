@@ -9,6 +9,9 @@ var answer_buf;
 var current_q;
 var start_ts;
 var score_board;
+var basic_score = 50;
+var bonus_score = 50;
+
 function reset_data() {
   answer_buf = {};
 }
@@ -170,14 +173,21 @@ router.get('/c/:cid([0-9A-Z]+)', function(req, res) {
       res.render('register', {user: users[cid], cid: cid});
     } else {
       var answer = req.param('a');
-      if (current_q !== undefined && current_q.c[answer] !== undefined &&
-          start_ts !== undefined) {
-        var ts = new Date().getTime();
-        answer_buf[cid] = {answer: answer, ts: ts - start_ts};
-        socketio.sockets.emit('update', answer_buf);
+      var msg;
+      if (answer !== undefined) {
+        if (current_q !== undefined && current_q.c[answer] !== undefined &&
+            start_ts !== undefined) {
+          var ts = new Date().getTime();
+          answer_buf[cid] = {answer: answer, ts: ts - start_ts};
+          socketio.sockets.emit('update', answer_buf);
+          msg = answer + 'で回答を受け付けました';
+        } else {
+          answer = undefined;
+          msg = '今は回答できません';
+        }
       }
       res.render('client', {user: users[cid], answer: answer,
-                            cid: cid, q: current_q});
+                            cid: cid, q: current_q, msg: msg});
     }
   } else {
     res.render('error', {messages: '不正なURLです。URLを確認してください'});
