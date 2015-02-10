@@ -35,7 +35,8 @@ $(document).ready(function() {
       break;
 
     case 'start':
-      show_countdown(socket, 60);
+      console.log(ev.data);
+      show_countdown(socket, ev.data.timeout);
       break;
     }
   });

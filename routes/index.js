@@ -11,6 +11,7 @@ var start_ts;
 var score_board;
 var basic_score = 50;
 var bonus_score = 50;
+var quiz_timeout = 10.0;
 
 function reset_data() {
   answer_buf = {};
@@ -31,8 +32,23 @@ function event_handler(msg) {
     
   case 'end':
     for (k in answer_buf) {
-      // TODO: calc points for players
+      if(score_board[k] === undefined) {
+        score_board[k] = 0;
+      }
+      var rec = answer_buf[k];
+      if (rec.answer === current_q.a) {
+        console.log('correct: ' + k);
+        var ts = Math.min(rec.ts/1000, quiz_timeout);
+        console.log(answer_buf[k]);
+        var br = (quiz_timeout - ts) / quiz_timeout;
+        console.log(br);
+        score_board[k] += (basic_score +
+                           bonus_score * br);
+      } else {
+        console.log('incorrect: ' + k);
+      }
     }
+    console.log(score_board);
     start_ts = undefined;
     return false;
 
@@ -40,13 +56,16 @@ function event_handler(msg) {
     reset_data(); 
     current_q = questions[msg.data];
     current_q.qid = msg.data;
-    socketio.sockets.emit('event', {name: 'setq', data: questions[msg.data]});
+    socketio.sockets.emit('event', {name: 'setq',
+                                    data: questions[msg.data]});
     return false;
-
 
   case 'start':
     start_ts = new Date().getTime();
-    break;
+    var d = {timeout: quiz_timeout};
+    socketio.sockets.emit('event', {name: 'start',
+                                    data: d});
+    return false;
 
   case 'reset':
     reset_score();
@@ -202,7 +221,7 @@ router.post('/c/:cid([0-9A-Z]+)', function(req, res) {
     console.log(name);
     users[cid].name = name.slice(0, 16);
     res.render('client', {user: users[cid], answer: undefined,
-                          cid: cid, q: current_q});
+                          cid: cid, q: current_q, msg: undefined});
   } else {
     res.render('error', {messages: '不正なURLです。URLを確認してください'});
   }  
