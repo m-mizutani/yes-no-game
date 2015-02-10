@@ -17,11 +17,10 @@ $(document).ready(function() {
     console.log(ev);
     switch (ev.name) {
     case 'setq':
+      switch_content('main');
       $('#image').empty();
       $('#choices').empty();
       $('ul#result').empty();
-      $('#status').empty();
-      $('div#result').css('display', 'none');
       
       $('#image').append('<img src="' + ev.data.img + '"/>');
       $('#question').text("問題 " + ev.data.q);
@@ -58,7 +57,7 @@ $(document).ready(function() {
     $('div#result').animate({height: 'show'}, 1000);
 
     setTimeout(function() {
-      $('span#correct').text(correct);
+      $('span#correct').text(correct + ': ' + msg.q.c[correct]);
       var ranker = p.slice(0, 10);
       var int_id = setInterval(function() {
         console.log(ranker);
@@ -95,4 +94,41 @@ $(document).ready(function() {
     console.log(msg);
   });
 
+  function switch_content(content) {
+    $('div.content').addClass('hide');
+    $('div.content#' + content).removeClass('hide');
+    $('div#result').css('display', 'none');
+    $('#status').empty();
+  }
+    
+  socket.on('summary', function(msg) {
+    console.log(msg);
+    $('ul#ranking').empty();
+    switch_content('score');
+
+    var p = [];
+    for (var k in msg.score) {
+      p.push({user: msg.users[k].name, score: msg.score[k]});
+    }
+    p.sort(function(a, b) { return b.score - a.score; });
+    p.slice(0, 20);
+    console.log(p);
+
+    var int_id = setInterval(function() {
+      if (p.length > 0) {
+        var rank = p.length;
+        var li_id = 'rank_' + p.length;
+        var u = p.pop();
+        var name = (u.user === undefined ? '名無しさん' : u.user);
+        var html = '<li id="' + li_id + '">' +
+            rank + '位 ' + name + ' ' + u.score + '点</li>';
+        $('ul#ranking').prepend(html);
+        // $('li#' + li_id).fadeIn('slow');
+        $('li#' + li_id).animate({height: 'show'});
+      } else {
+        clearInterval(int_id);
+      }
+    }, 1000);
+    
+  });
 });

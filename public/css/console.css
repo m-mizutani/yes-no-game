@@ -101,6 +101,27 @@ div#result {
 div#result h2 {
     text-align: center;
     margin: 10px;
+    font-size: 24pt;
+    font-weight: bold;
+}
+div#result h2 {
+    margin: 10px;
     font-size: 36pt;
     font-weight: bold;
+}
+div#score h2 {
+    text-align: center;
+    margin: 10px;
+    font-size: 36pt;
+    font-weight: bold;
+}
+ul#ranking {
+    text-align: center;
+    font-size: 18pt;
+}
+ul#ranking li {
+    display: none;
+}
+.hide {
+    display: none;
 }

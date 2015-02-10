@@ -13,21 +13,14 @@ var basic_score = 50;
 var bonus_score = 50;
 var quiz_timeout = 10.0;
 
-function reset_data() {
-  answer_buf = {};
-}
-function reset_score() {
-  score_board = {};
-}
-reset_data();
-reset_score();
 
 function event_handler(msg) {
   console.log(msg);
   switch(msg.name) {
   case 'result':
     socketio.sockets.emit('result', {result: answer_buf, users: users,
-                                     correct: current_q.a});
+                                     correct: current_q.a,
+                                     q: current_q});
     return false;
     
   case 'end':
@@ -44,6 +37,7 @@ function event_handler(msg) {
         console.log(br);
         score_board[k] += (basic_score +
                            bonus_score * br);
+        score_board[k] = Math.floor(score_board[k] * 10) / 10;
       } else {
         console.log('incorrect: ' + k);
       }
@@ -69,6 +63,11 @@ function event_handler(msg) {
 
   case 'reset':
     reset_score();
+    return false;
+
+  case 'summary':
+    socketio.sockets.emit('summary', {score: score_board,
+                                      users: users});
     return false;
   }
 
@@ -115,7 +114,7 @@ var questions = {
      c: {A: '結婚しよう', B: '白髪になるまでいっしょに笑い合いたい',
          C: '僕の奥さんになってください', D: 'ずっと一緒にいたい'},
      a: 'D',
-     img: 'http://funnydate.up.seesaa.net/image/00088282_090331072422.jpg'
+     img: 'http://livedoor.4.blogimg.jp/chihhylove/imgs/7/a/7aa19099.png'
     },
   q4: 
     {q: 'なつかさんがしょうた君にきゅんとしたポイントは？',
@@ -124,7 +123,7 @@ var questions = {
     C: '入社式当日に一目惚れ',
     D: '磯村君の筋肉'},
     a: 'B',
-    img: ''},
+    img: 'http://dic.nicovideo.jp/oekaki/305163.png'},
   q5: 
     {q: 'キノコ嫌いのしょうた君が大丈夫だったキノコ科の食べ物はなんでしょう？',
     c: {A: '松茸', B: ' エリンギ', C: 'マイタケ', D: 'キクラゲ'},
@@ -173,8 +172,21 @@ function load_client_id() {
   }
   var id_list = raw_data.toString().split(/\n/);
   id_list.forEach(function(cid) { if (cid.length > 0) {users[cid] = {}; }});
+  reset_data();
+  reset_score();  
 }
 load_client_id();
+
+function reset_data() {
+  answer_buf = {};
+}
+function reset_score() {
+  score_board = {};
+  for (var cid in users) {
+    score_board[cid] = 0.0;
+  }
+}
+
 
 
 /* GET console */

@@ -12,6 +12,9 @@ $(document).ready(function() {
   $('#start_btn').click(function() {
     socket.emit('event', {name: 'start'});
   });
+  $('#summary_btn').click(function() {
+    socket.emit('event', {name: 'summary'});
+  });
   $('#reset_btn').click(function() {
     console.log('reset');
     socket.emit('event', {name: 'reset'});
