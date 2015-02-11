@@ -146,19 +146,19 @@ var questions = {
     img: 'http://www.showanavi.jp/archive/archive/images/7176.jpg'},
   q7: 
     {q: '問7 しょうた君がなつかさんにプロポーズをしたときに、図らずも証人となった動物とは？',
-    c: {A: '猫', B: 'セントバーナード', C: '野うさぎ', D: '白鳥'},
+     c: {A: '猫', B: 'セントバーナード', C: '野うさぎ', D: '白鳥'},
     a: 'A',
     img: 'http://ubuntu.firebird.jp/wp-content/uploads/2012/04/koshachya-molitva.jpg'},
   q8: 
     {q: '問8 告白したのはどこでしょう？',
-    c: {
-      A: 'ディズニーランド',
-    B: 'なっちゃんのお家',
-    C: 'しょうたくんのお家',
-    D: 'IBM同期の水谷さんのお家'
-    },
-    a: 'B',
-    img: 'http://invisible-one.tokyo/wp/wp-content/uploads/2014/11/blog-love.jpg'},
+     c: {
+       A: 'ディズニーランド',
+       B: 'なっちゃんのお家',
+       C: 'しょうたくんのお家',
+       D: 'IBM同期の水谷さんのお家'
+     },
+     a: 'B',
+     img: 'http://invisible-one.tokyo/wp/wp-content/uploads/2014/11/blog-love.jpg'},
   };
 
 
