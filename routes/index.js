@@ -41,6 +41,7 @@ function event_handler(msg) {
           score_board[k] *= current_q.ratio;
         }
         users[k].score += score_board[k];
+        users[k].score = Math.floor(users[k].score * 10) / 10;
       }
     }
     console.log(score_board);
@@ -126,7 +127,7 @@ var questions = {
     },
   q3: 
     {q: '問3 しょうた君のプロポーズの言葉は？',
-     c: {A: '結婚しよう', B: '白髪になるまで<br>いっしょに笑い合いたい',
+     c: {A: '結婚しよう', B: '白髪になるまでいっしょに笑い合いたい',
          C: '僕の奥さんになってください', D: 'ずっと一緒にいたい'},
      a: 'D',
     img: '/images/q3.jpg',
@@ -154,8 +155,8 @@ var questions = {
   q6: 
     {q: '問6 しょうた君の誕生日になつかさんがしたサプライズとは？',
     c: {
-      A: '黒いスポーツカーを<br>プレゼント',
-      B: 'しょうた君が泊まっている<br>ホテルへ電報',
+      A: '黒いスポーツカーをプレゼント',
+      B: 'しょうた君が泊まっているホテルへ電報',
       C: 'ラーメン一年分プレゼント',
       D: 'ホテルのバー貸し切り'},
     a: 'B',
