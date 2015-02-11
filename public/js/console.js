@@ -52,7 +52,7 @@ $(document).ready(function() {
     p.sort(function(a, b) { return a.ts - b.ts; });
     console.log(p);
     
-    $('div#result div#ranker').empty();
+    $('div#result ul#ranker').empty();
     $('span#correct').text('');
     $('div#result').animate({height: 'show'}, 1000);
 

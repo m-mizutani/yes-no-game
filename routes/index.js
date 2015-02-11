@@ -9,9 +9,9 @@ var answer_buf;
 var current_q;
 var start_ts;
 var score_board;
-var basic_score = 50;
-var bonus_score = 50;
-var quiz_timeout = 10.0;
+var basic_score = 40;
+var bonus_score = 60;
+var quiz_timeout = 60.0;
 
 
 function event_handler(msg) {
