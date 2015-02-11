@@ -44,7 +44,8 @@ function event_handler(msg) {
     }
     console.log(score_board);
     start_ts = undefined;
-    setInterval(function() {
+    dump_userdata();
+    setTimeout(function() {
       socketio.sockets.emit('result', {result: answer_buf, users: users,
                                        correct: current_q.a, score: score_board,
                                        q: current_q});
@@ -201,8 +202,8 @@ function dump_userdata() {
 function load_userdata() {
   try {
     var data = fs.readFileSync('data/user.msg');    
-    console.log(data);
     users = msgpack.unpack(data);
+    console.log(users);
     return true;
   } catch(e) {
     console.log(e);
@@ -257,7 +258,7 @@ router.get('/c/:cid([0-9A-Z]+)', function(req, res) {
                             cid: cid, q: current_q, msg: msg});
     }
   } else {
-    res.render('error', {messages: '不正なURLです。URLを確認してください'});
+    res.render('error', {message: '不正なURLです。URLを確認してください'});
   }  
 });
 
@@ -272,7 +273,7 @@ router.post('/c/:cid([0-9A-Z]+)', function(req, res) {
     res.render('client', {user: users[cid], answer: undefined,
                           cid: cid, q: current_q, msg: undefined});
   } else {
-    res.render('error', {messages: '不正なURLです。URLを確認してください'});
+    res.render('error', {message: '不正なURLです。URLを確認してください'});
   }  
   console.log(req.params);
 });
