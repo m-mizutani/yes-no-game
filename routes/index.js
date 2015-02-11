@@ -30,26 +30,31 @@ function event_handler(msg) {
       }
       var rec = answer_buf[k];
       if (rec.answer === current_q.a) {
-        console.log('correct: ' + k);
         var ts = Math.min(rec.ts/1000, quiz_timeout);
-        console.log(answer_buf[k]);
         var br = (quiz_timeout - ts) / quiz_timeout;
         console.log(br);
         score_board[k] = (basic_score + bonus_score * br);
         score_board[k] = Math.floor(score_board[k] * 10) / 10;
+
+        // Apply score ratio option.
+        if (current_q.ratio !== undefined) {
+          score_board[k] *= current_q.ratio;
+        }
         users[k].score += score_board[k];
-      } else {
-        console.log('incorrect: ' + k);
       }
     }
     console.log(score_board);
     start_ts = undefined;
     dump_userdata();
+
+    // Automatically send event to show result.
     setTimeout(function() {
       socketio.sockets.emit('result', {result: answer_buf, users: users,
                                        correct: current_q.a, score: score_board,
                                        q: current_q});
     }, 2000);
+    
+    // Send refresh to client.
     setTimeout(function() {
       socketio.sockets.emit('event', {name: 'reload-client'});
     }, 10000);
