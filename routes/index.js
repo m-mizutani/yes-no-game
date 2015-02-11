@@ -23,6 +23,11 @@ function event_handler(msg) {
     return false;
     
   case 'end':
+    if (start_ts === undefined) {
+      console.log('invalid end event');
+      return false;
+    }
+    
     var score_board = {};
     for (k in answer_buf) {
       if(score_board[k] === undefined) {
