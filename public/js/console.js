@@ -23,7 +23,7 @@ $(document).ready(function() {
       $('ul#result').empty();
       
       $('#image').append('<img src="' + ev.data.img + '"/>');
-      $('#question').text("問題 " + ev.data.q);
+      $('#question').text(ev.data.q);
       for (var c in ev.data.c) {
         var choice = '<li id="' + c + '"><div class="c_title">' + c + ': ' +
             ev.data.c[c] +

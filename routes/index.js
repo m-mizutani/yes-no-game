@@ -98,54 +98,34 @@ var questions = {
        img: 'http://heiasetarrow.com/wp-content/uploads/2015/02/3D-Happy_Valentines_Day_theme_desktop_wallpaper_medium.jpg',
       },
     q1: {
-      q: '去年のバレンタインになつかさんがしょうた君にあげたものは！？',
+      q: '問1 去年のバレンタインになつかさんがしょうた君にあげたものは！？',
     c: {A: 'ラーメン', B: '自転車', C: '温泉旅行' , D: '香水'},
     a: 'D',
     img: 'http://fakeout-magazine.com/wp-content/uploads/2015/02/%E3%83%90%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%B3%E3%83%87%E3%83%BC%E3%80%81%E3%83%86%E3%83%87%E3%82%A3%E3%83%99%E3%82%A2.jpg',
     },
 
-    q2: {q: 'これまでに二人で走ってきた総走行距離は何キロか？',
-    c: {A: '42km', B: '250km', C: '1430km', D: '3300km'},
+    q2: {q: '問2 これまでに二人が自転車で走ってきた総走行距離は何キロか？',
+    c: {A: '42km', B: '250km', C: '1430km', D: '40075km'},
     a: 'C',
     img: 'http://funnydate.up.seesaa.net/image/00088282_090331072422.jpg',
     },
   q3: 
-    {q: 'しょうた君のプロポーズの言葉は？',
+    {q: '問3 しょうた君のプロポーズの言葉は？',
      c: {A: '結婚しよう', B: '白髪になるまでいっしょに笑い合いたい',
          C: '僕の奥さんになってください', D: 'ずっと一緒にいたい'},
      a: 'D',
      img: 'http://livedoor.4.blogimg.jp/chihhylove/imgs/7/a/7aa19099.png'
     },
   q4: 
-    {q: 'なつかさんがしょうた君にきゅんとしたポイントは？',
+    {q: '問4 なつかさんがしょうた君にきゅんとしたポイントは？',
     c: {A: '研修中のグループワークで、ロジカルな発言をしたとき',
     B: '買い物にいったときに赤いスポーツカーでお迎えにきたとき',
     C: '入社式当日に一目惚れ',
-    D: '磯村君の筋肉'},
+    D: 'しょうた君の筋肉'},
     a: 'B',
     img: 'http://dic.nicovideo.jp/oekaki/305163.png'},
   q5: 
-    {q: 'キノコ嫌いのしょうた君が大丈夫だったキノコ科の食べ物はなんでしょう？',
-    c: {A: '松茸', B: ' エリンギ', C: 'マイタケ', D: 'キクラゲ'},
-    a: 'D',
-    img: 'http://www.showanavi.jp/archive/archive/images/7176.jpg'},
-  q6: 
-    {q: 'しょうた君がなつかさんにプロポーズをしたときに、図らずも証人となった動物とは？',
-    c: {A: '猫', B: 'セントバーナード', C: '野うさぎ', D: '白鳥'},
-    a: 'A',
-    img: 'http://ubuntu.firebird.jp/wp-content/uploads/2012/04/koshachya-molitva.jpg'},
-  q7: 
-    {q: '告白したのはどこでしょう？',
-    c: {
-      A: 'ディズニーランド',
-    B: 'なっちゃんのお家',
-    C: 'しょうたくんのお家',
-    D: 'IBM同期の水谷さんのお家'
-    },
-    a: 'B',
-    img: 'http://invisible-one.tokyo/wp/wp-content/uploads/2014/11/blog-love.jpg'},
-  q8: 
-    {q: 'このシステムの開発にかかった期間はどれくらいでしょう？',
+    {q: '問5 このクイズシステムの開発にかかった期間はどれくらいでしょう？',
     c: {
       A: '一週間',
     B: '一ヶ月',
@@ -154,6 +134,31 @@ var questions = {
     },
     a: 'A',
     img: 'http://livedoor.blogimg.jp/nnt_boy/imgs/a/3/a32ffca5.png'},
+    
+  q6: 
+    {q: '問6 しょうた君の誕生日になつかさんがしたサプライズとは？',
+    c: {
+      A: '黒いスポーツカーをプレゼント',
+      B: 'しょうた君が泊まっているホテルへ電報',
+      C: 'ラーメン一年分プレゼント',
+      D: 'ホテルのバー貸し切り'},
+    a: 'B',
+    img: 'http://www.showanavi.jp/archive/archive/images/7176.jpg'},
+  q7: 
+    {q: '問7 しょうた君がなつかさんにプロポーズをしたときに、図らずも証人となった動物とは？',
+    c: {A: '猫', B: 'セントバーナード', C: '野うさぎ', D: '白鳥'},
+    a: 'A',
+    img: 'http://ubuntu.firebird.jp/wp-content/uploads/2012/04/koshachya-molitva.jpg'},
+  q8: 
+    {q: '問8 告白したのはどこでしょう？',
+    c: {
+      A: 'ディズニーランド',
+    B: 'なっちゃんのお家',
+    C: 'しょうたくんのお家',
+    D: 'IBM同期の水谷さんのお家'
+    },
+    a: 'B',
+    img: 'http://invisible-one.tokyo/wp/wp-content/uploads/2014/11/blog-love.jpg'},
   };
 
 
