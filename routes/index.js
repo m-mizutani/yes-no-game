@@ -8,10 +8,9 @@ var socketio;
 var answer_buf;
 var current_q;
 var start_ts;
-var score_board;
 var basic_score = 40;
 var bonus_score = 60;
-var quiz_timeout = 60.0;
+var quiz_timeout = 10.0;
 
 
 function event_handler(msg) {
@@ -24,6 +23,7 @@ function event_handler(msg) {
     return false;
     
   case 'end':
+    var score_board = {};
     for (k in answer_buf) {
       if(score_board[k] === undefined) {
         score_board[k] = 0;
@@ -35,15 +35,21 @@ function event_handler(msg) {
         console.log(answer_buf[k]);
         var br = (quiz_timeout - ts) / quiz_timeout;
         console.log(br);
-        score_board[k] += (basic_score +
-                           bonus_score * br);
+        score_board[k] = (basic_score + bonus_score * br);
         score_board[k] = Math.floor(score_board[k] * 10) / 10;
+        users[k].score = score_board[k];
       } else {
         console.log('incorrect: ' + k);
       }
     }
     console.log(score_board);
     start_ts = undefined;
+    setInterval(function() {
+      socketio.sockets.emit('result', {result: answer_buf, users: users,
+                                       correct: current_q.a, score: score_board,
+                                       q: current_q});
+    }, 2000);
+    
     return false;
 
   case 'setq':
@@ -159,7 +165,8 @@ var questions = {
        D: 'IBM同期の水谷さんのお家'
      },
      a: 'B',
-    img: '/images/q8.jpg'},
+    img: '/images/q8.jpg',
+    ratio: 2.0},
   };
 
 
@@ -177,19 +184,42 @@ function load_client_id() {
     raw_data = fs.readFileSync(testdata_path);
   }
   var id_list = raw_data.toString().split(/\n/);
-  id_list.forEach(function(cid) { if (cid.length > 0) {users[cid] = {}; }});
+  id_list.forEach(function(cid) { if (cid.length > 0) {users[cid] = {score: 0}; }});
   reset_data();
   reset_score();  
 }
-load_client_id();
+
+function dump_userdata() {
+  fs.writeFile('data/user.msg', msgpack.pack(users), function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log("The file was saved!");
+    }
+  });
+}
+function load_userdata() {
+  try {
+    var data = fs.readFileSync('data/user.msg');    
+    console.log(data);
+    users = msgpack.unpack(data);
+    return true;
+  } catch(e) {
+    console.log(e);
+    return false;
+  }
+}
+
+if (load_userdata() === false) {
+  load_client_id();
+}
 
 function reset_data() {
   answer_buf = {};
 }
 function reset_score() {
-  score_board = {};
   for (var cid in users) {
-    score_board[cid] = 0.0;
+    users[cid].score = 0.0;
   }
 }
 
@@ -238,6 +268,7 @@ router.post('/c/:cid([0-9A-Z]+)', function(req, res) {
     var name = req.param('name');
     console.log(name);
     users[cid].name = name.slice(0, 16);
+    dump_userdata();
     res.render('client', {user: users[cid], answer: undefined,
                           cid: cid, q: current_q, msg: undefined});
   } else {
