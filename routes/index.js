@@ -101,20 +101,20 @@ var questions = {
       q: '問1 去年のバレンタインになつかさんがしょうた君にあげたものは！？',
     c: {A: 'ラーメン', B: '自転車', C: '温泉旅行' , D: '香水'},
     a: 'D',
-    img: 'http://fakeout-magazine.com/wp-content/uploads/2015/02/%E3%83%90%E3%83%AC%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%B3%E3%83%87%E3%83%BC%E3%80%81%E3%83%86%E3%83%87%E3%82%A3%E3%83%99%E3%82%A2.jpg',
+    img: '/images/q1.jpg',
     },
 
     q2: {q: '問2 これまでに二人が自転車で走ってきた総走行距離は何キロか？',
     c: {A: '42km', B: '250km', C: '1430km', D: '40075km'},
     a: 'C',
-    img: 'http://funnydate.up.seesaa.net/image/00088282_090331072422.jpg',
+    img: '/images/q2.jpg',
     },
   q3: 
     {q: '問3 しょうた君のプロポーズの言葉は？',
      c: {A: '結婚しよう', B: '白髪になるまでいっしょに笑い合いたい',
          C: '僕の奥さんになってください', D: 'ずっと一緒にいたい'},
      a: 'D',
-     img: 'http://livedoor.4.blogimg.jp/chihhylove/imgs/7/a/7aa19099.png'
+    img: '/images/q3.jpg',
     },
   q4: 
     {q: '問4 なつかさんがしょうた君にきゅんとしたポイントは？',
@@ -123,7 +123,8 @@ var questions = {
     C: '入社式当日に一目惚れ',
     D: 'しょうた君の筋肉'},
     a: 'B',
-    img: 'http://dic.nicovideo.jp/oekaki/305163.png'},
+    img: '/images/q4.jpg',
+    },
   q5: 
     {q: '問5 このクイズシステムの開発にかかった期間はどれくらいでしょう？',
     c: {
@@ -133,22 +134,22 @@ var questions = {
     D: '一年'
     },
     a: 'A',
-    img: 'http://livedoor.blogimg.jp/nnt_boy/imgs/a/3/a32ffca5.png'},
+    img: '/images/q5.jpg'},
     
   q6: 
     {q: '問6 しょうた君の誕生日になつかさんがしたサプライズとは？',
     c: {
-      A: '黒いスポーツカーをプレゼント',
-      B: 'しょうた君が泊まっているホテルへ電報',
+      A: '黒いスポーツカーを<br>プレゼント',
+      B: 'しょうた君が泊まっている<br>ホテルへ電報',
       C: 'ラーメン一年分プレゼント',
       D: 'ホテルのバー貸し切り'},
     a: 'B',
-    img: 'http://www.showanavi.jp/archive/archive/images/7176.jpg'},
+    img: '/images/q6.jpg'},
   q7: 
     {q: '問7 しょうた君がなつかさんにプロポーズをしたときに、図らずも証人となった動物とは？',
      c: {A: '猫', B: 'セントバーナード', C: '野うさぎ', D: '白鳥'},
     a: 'A',
-    img: 'http://ubuntu.firebird.jp/wp-content/uploads/2012/04/koshachya-molitva.jpg'},
+    img: '/images/q7.jpg'},
   q8: 
     {q: '問8 告白したのはどこでしょう？',
      c: {
@@ -158,7 +159,7 @@ var questions = {
        D: 'IBM同期の水谷さんのお家'
      },
      a: 'B',
-     img: 'http://invisible-one.tokyo/wp/wp-content/uploads/2014/11/blog-love.jpg'},
+    img: '/images/q8.jpg'},
   };
 
 

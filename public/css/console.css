@@ -45,12 +45,11 @@ div#status {
 
 div.content {
     font-size: 16pt;
-    padding: 0px 50px 20px 50px;
 }
 
 ul#choices li {
     margin-top: 10px;
-    font-size: 22pt;
+    font-size: 20pt;
     clear: both;
     line-height: 1em;
     padding: 5px;
@@ -59,7 +58,7 @@ div.c_title {
     text-align: right;
     margin: 0px 10px 5px 0px;
     float: left;
-    width: 360px;
+    width: 400px;
 }
 meter.bar {
     width: 0px;
