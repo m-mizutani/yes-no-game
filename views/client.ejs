@@ -5,10 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-  
-  <%= user.name %>さん
-    <a href="/c/<%= cid %>">画面更新</a>
-    <a href="/c/<%= cid %>?r=y">名前変更</a>
+
+    <div>
+      <%= user.name %>さん
+      <a href="/c/<%= cid %>">画面更新</a>
+      <a href="/c/<%= cid %>?r=y">名前変更</a>
+    </div>
+    <div>
+      現在の得点は <%= user.score %>点です
+    </div>
+    
     <div id="">
 
       <% if (q !== undefined) { %>
@@ -30,7 +36,7 @@
       var socket = io.connect(location.protocol + '//' + location.host);
       if (socket !== undefined) {
       socket.on('event', function (ev) {
-      if (ev.name === 'setq') {
+      if (ev.name === 'reload-client') {
       location.href = location.protocol + '//' + location.host + '/c/<%= cid %>'; }
       });}
     </script>

@@ -37,7 +37,7 @@ function event_handler(msg) {
         console.log(br);
         score_board[k] = (basic_score + bonus_score * br);
         score_board[k] = Math.floor(score_board[k] * 10) / 10;
-        users[k].score = score_board[k];
+        users[k].score += score_board[k];
       } else {
         console.log('incorrect: ' + k);
       }
@@ -50,7 +50,9 @@ function event_handler(msg) {
                                        correct: current_q.a, score: score_board,
                                        q: current_q});
     }, 2000);
-    
+    setTimeout(function() {
+      socketio.sockets.emit('event', {name: 'reload-client'});
+    }, 10000);
     return false;
 
   case 'setq':
@@ -59,6 +61,7 @@ function event_handler(msg) {
     current_q.qid = msg.data;
     socketio.sockets.emit('event', {name: 'setq',
                                     data: questions[msg.data]});
+    socketio.sockets.emit('event', {name: 'reload-client'});
     return false;
 
   case 'start':
@@ -118,7 +121,7 @@ var questions = {
     },
   q3: 
     {q: '問3 しょうた君のプロポーズの言葉は？',
-     c: {A: '結婚しよう', B: '白髪になるまでいっしょに笑い合いたい',
+     c: {A: '結婚しよう', B: '白髪になるまで<br>いっしょに笑い合いたい',
          C: '僕の奥さんになってください', D: 'ずっと一緒にいたい'},
      a: 'D',
     img: '/images/q3.jpg',
