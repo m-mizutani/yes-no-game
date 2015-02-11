@@ -64,8 +64,8 @@ $(document).ready(function() {
         if (ranker.length > 0) {
           var u = ranker.pop();
           var li_id = 'rank_' + ranker.length;
-          $('ul#ranker').prepend('<li id="' + li_id + '">' +
-                                 u.user + ': ' + u.ts / 1000 + '秒</li>');
+          $('ul#ranker').prepend('<li id="' + li_id + '"></li>');
+          $('li#' + li_id).text(u.user + 'さん: ' + u.ts / 1000 + '秒');
           $('li#' + li_id).fadeIn(1000);
         } else {
           clearInterval(int_id);
@@ -107,11 +107,11 @@ $(document).ready(function() {
     switch_content('score');
 
     var p = [];
-    for (var k in msg.score) {
-      p.push({user: msg.users[k].name, score: msg.score[k]});
+    for (var k in msg.users) {
+      p.push({user: msg.users[k].name, score: msg.users[k].score});
     }
     p.sort(function(a, b) { return b.score - a.score; });
-    p.slice(0, 20);
+    p = p.slice(0, 20);
     console.log(p);
 
     var int_id = setInterval(function() {
@@ -120,9 +120,12 @@ $(document).ready(function() {
         var li_id = 'rank_' + p.length;
         var u = p.pop();
         var name = (u.user === undefined ? '名無しさん' : u.user);
-        var html = '<li id="' + li_id + '">' +
-            rank + '位 ' + name + ' ' + u.score + '点</li>';
+        var html = '<li id="' + li_id + '"></li>';
+        var txt = rank + '位 ' + name + ' ' + u.score + '点';
+            
         $('ul#ranking').prepend(html);
+        $('li#' + li_id).text(txt);
+        
         // $('li#' + li_id).fadeIn('slow');
         $('li#' + li_id).animate({height: 'show'});
       } else {
