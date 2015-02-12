@@ -42,12 +42,19 @@ $(document).ready(function() {
     case 'start':
       console.log(ev.data);
       show_countdown(socket, ev.data.timeout);
+      sounds.se1.stop();
       sounds.se2.play();
+      break;
+
+    case 'voted':
+      $('div#result').css('display', 'none');
+      
       break;
     }
   });
 
   socket.on('result', function (msg) {
+    sounds.se2.stop();
     console.log(msg);
     var correct = msg.correct;
     var p = [];
