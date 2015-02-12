@@ -15,52 +15,60 @@ def gen_images(hostname, fname, wd):
         url = 'http://' + hostname + '/c/' + cid
         img = qrcode.make(url)
         img_path = os.path.join(wd, '{0}.png'.format(cid))
-        img_files.append(img_path)
+        img_files.append((url, img_path))
         img.save(img_path)
 
     return img_files
 
-def gen_tex(img_files, work_dir):
-    header = '''\\documentclass[twocolumn,10pt]{jarticle} 
-\\setlength{\\columnsep}{6zw}
-\\setlength{\\textheight}{\\paperheight}
-\\setlength{\\topmargin}{-10mm}
-\\addtolength{\\topmargin}{-\\headheight}
-\\addtolength{\\topmargin}{-\\headsep}
-\\addtolength{\\textheight}{-30truemm}
-\\setlength{\\textwidth}{\\paperwidth}
-\\setlength{\\oddsidemargin}{-10truemm}
-\\setlength{\\evensidemargin}{-0.4truemm}
-\\addtolength{\\textwidth}{-30truemm}
-\\usepackage[dvipdfmx]{graphicx}
-\\begin{document} '''
-
-    footer = '\\end{document}'
-    fd = open(os.path.join(work_dir, 'list.tex'), 'w')
+def gen_html(img_files, work_dir):
+    header = '''<html>
+  <head>
+    <style type="text/css">
+      hr.newpage { page-break-after: always;
+      clear: both; }
+      img {width: 160px;}
+      div.detail {font-size: 10pt; }
+      div.left { float: left; width: 360px; }
+      div.center { margin-left: 40px; float: left; width: 360px;}
+      div.right  { margin-left: 800px;  width: 360px;}
+      h1 { margin: 5px; }
+      h2 { margin: 40px 0px 5px 0px; }
+      pre { margin: 0px; }
+    </style>
+  </head>
+  <body>
+'''
+    footer = '</body></html>'
+    fd = open(os.path.join(work_dir, 'list.html'), 'w')
     fd.write(header + '\n')
 
     c = 0
-    for img in img_files:
+    for url, img in img_files:
         data = '''
-二次会中のゲーム用のQRコードになります。
-携帯もしくはスマートフォンで読み込ませ、
-何か不具合がありましたら、幹事までご連絡ください。
-
-\\begin{figure}[h]
-  \\includegraphics[width=3cm]{__IMG__}
-\\end{figure}
-
-新郎新婦より　本日のお写真の共有のお願い
-以下サイトからアプリをダウンロードして、お写真の共有にご協力ください！
-
-\\begin{figure}[hb]
-  \\includegraphics[width=4cm]{../data/photo.jpg}
-\\end{figure}
-
-\\newpage
+      <h1>二次会御出席の皆様へ</h1>
+      <h2>1. 余興用サイトのお知らせ</h2>
+      <div class="detail">
+	本日の二次会にてインターネットサイトへのアクセスを利用した余興を
+	ご用意しております。以下のQRコード、またはURLからごアクセスください。
+	このQRコード、URLは個々人で異なりますので、
+	余興開始までなくさないようご注意ください.
+      </div>
+      <img src="{0}" />
+      <pre>URL: {1}</pre>
+      
+      <h2>2. 新郎新婦より<br>本日のお写真の共有のお願い</h2>
+      <div class="detail">
+	以下サイトからアプリをダウンロードして、お写真の共有にご協力ください！
+      </div>
+      <img src="../data/photo.jpg">
 '''
-        data = re.sub(r'__IMG__', img, data)
-        fd.write(data)
+
+        if   c % 3 == 0: fd.write('<div class="left">\n')
+        elif c % 3 == 1: fd.write('<div class="center">\n')
+        elif c % 3 == 2: fd.write('<div class="right">\n')
+        fd.write(data.format(img, url))
+        fd.write('</div>\n')
+        if c % 3 == 2: fd.write('<br style="clear:both;"><hr class="newpage">\n')
         c += 1
         # if c % 2 == 0: fd.write('\\newpage\n')
         
@@ -74,5 +82,5 @@ if __name__ == '__main__':
 
     work_dir = sys.argv[3]
     img_files = gen_images(sys.argv[1], sys.argv[2], work_dir)
-    gen_tex(img_files, work_dir)
+    gen_html(img_files, work_dir)
     

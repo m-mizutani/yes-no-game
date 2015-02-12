@@ -11,7 +11,12 @@ function show_countdown(sock, remain) {
   }, 100);
 }
 
+var sounds = {};
 $(document).ready(function() {
+  sounds.se1 = new buzz.sound( "/audio/se1.mp3");
+  sounds.se2 = new buzz.sound( "/audio/se2.mp3");
+  sounds.se3 = new buzz.sound( "/audio/se3.mp3");
+
   var socket = io.connect(location.protocol + '//' + location.host);
   socket.on('event', function (ev) {
     console.log(ev);
@@ -31,11 +36,13 @@ $(document).ready(function() {
             '</li>';
         $('#choices').append(choice);
       }
+      sounds.se1.play();
       break;
 
     case 'start':
       console.log(ev.data);
       show_countdown(socket, ev.data.timeout);
+      sounds.se2.play();
       break;
     }
   });
@@ -59,6 +66,7 @@ $(document).ready(function() {
 
     setTimeout(function() {
       $('span#correct').text(correct + ': ' + msg.q.c[correct]);
+      sounds.se3.play();
       var ranker = p.slice(0, 10);
       var int_id = setInterval(function() {
         console.log(ranker);
