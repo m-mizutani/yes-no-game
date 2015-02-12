@@ -18,6 +18,9 @@ $(document).ready(function() {
   $('#summary_btn').click(function() {
     socket.emit('event', {name: 'summary'});
   });
+  $('#resume_btn').click(function() {
+    socket.emit('event', {name: 'summary_resume'});
+  });
   $('#reset_btn').click(function() {
     console.log('reset');
     socket.emit('event', {name: 'reset'});

@@ -12,6 +12,8 @@ function show_countdown(sock, remain) {
 }
 
 var sounds = {};
+var run_summary_flag = false;
+
 $(document).ready(function() {
   sounds.se1 = new buzz.sound( "/audio/se1.mp3");
   sounds.se2 = new buzz.sound( "/audio/se2.mp3");
@@ -44,6 +46,10 @@ $(document).ready(function() {
       show_countdown(socket, ev.data.timeout);
       sounds.se1.stop();
       sounds.se2.play();
+      break;
+
+    case 'summary_resume':
+      run_summary_flag = true;
       break;
 
     case 'voted':
@@ -118,7 +124,7 @@ $(document).ready(function() {
     $('div#result').css('display', 'none');
     $('#status').empty();
   }
-    
+
   socket.on('summary', function(msg) {
     console.log(msg);
     $('ul#ranking').empty();
@@ -129,10 +135,15 @@ $(document).ready(function() {
       p.push({user: msg.users[k].name, score: msg.users[k].score});
     }
     p.sort(function(a, b) { return b.score - a.score; });
-    p = p.slice(0, 20);
+    p = p.slice(0, 30);
     console.log(p);
 
+    run_summary_flag = true;
     var int_id = setInterval(function() {
+      if (run_summary_flag === false) {
+        return ;
+      }
+      
       if (p.length > 0) {
         var rank = p.length;
         var li_id = 'rank_' + p.length;
@@ -146,6 +157,11 @@ $(document).ready(function() {
         
         // $('li#' + li_id).fadeIn('slow');
         $('li#' + li_id).animate({height: 'show'});
+
+        // 景品ない人枠だけ見せたところで一旦止める
+        if (p.length === 13) {
+          run_summary_flag = false;
+        }
       } else {
         clearInterval(int_id);
       }
