@@ -235,7 +235,7 @@ function reset_data() {
 }
 function reset_score() {
   for (var cid in users) {
-    users[cid].score = 0.0;
+    users[cid].score = 0;
   }
 }
 
