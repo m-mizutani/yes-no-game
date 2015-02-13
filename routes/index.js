@@ -4,13 +4,14 @@ var fs = require('fs');
 
 var router = express.Router();
 
+// Global variables
 var socketio;
 var answer_buf;
 var current_q;
 var start_ts;
 var basic_score = 40;
 var bonus_score = 60;
-var quiz_timeout = 10.0;
+var quiz_timeout = 60.0;
 
 
 function event_handler(msg) {

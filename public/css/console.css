@@ -9,7 +9,7 @@ body {
     z-index: -1;
     top: 0px;
     left: 0px;
-    border: red dotted 1px;
+    border: #CCC dotted 1px;
     width: 800px;
     height: 600px;
 }
