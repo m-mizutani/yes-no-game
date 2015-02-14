@@ -88,7 +88,8 @@ $(document).ready(function() {
           $('li#' + li_id).text(Math.floor(u.ts / 100) / 10 + '秒: ' +
                                 u.user + 'さん +' + 
                                 u.score + '点');
-          $('li#' + li_id).fadeIn(1000);
+          // $('li#' + li_id).fadeIn(1000);
+          $('li#' + li_id).animate({height: 'show'});
         } else {
           clearInterval(int_id);
         }
