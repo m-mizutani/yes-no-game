@@ -156,7 +156,7 @@ $(document).ready(function() {
         $('li#' + li_id).animate({height: 'show'});
 
         // 景品ない人枠だけ見せたところで一旦止める
-        if (p.length === 13) {
+        if (p.length === 12) {
           run_summary_flag = false;
         }
       } else {
