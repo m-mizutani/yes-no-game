@@ -78,7 +78,7 @@ $(document).ready(function() {
     setTimeout(function() {
       $('span#correct').text(correct + ': ' + msg.q.c[correct]);
       sounds.se3.play();
-      var ranker = p.slice(0, 10);
+      var ranker = p;
       var int_id = setInterval(function() {
         console.log(ranker);
         if (ranker.length > 0) {
@@ -92,7 +92,7 @@ $(document).ready(function() {
         } else {
           clearInterval(int_id);
         }
-      }, 1000);
+      }, 200);
     }, 3000);
   });
   
@@ -112,8 +112,6 @@ $(document).ready(function() {
       $('meter#' + a).css('width', (summary[a] * 2) + 'px');
       // $('span.count#' + a).text(summary[a] + '人');
     }
-
-    console.log(msg);
   });
 
   function switch_content(content) {
