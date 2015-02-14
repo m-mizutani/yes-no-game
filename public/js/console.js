@@ -53,8 +53,6 @@ $(document).ready(function() {
       break;
 
     case 'voted':
-      $('div#result').css('display', 'none');
-      
       break;
     }
   });
@@ -64,7 +62,7 @@ $(document).ready(function() {
     console.log(msg);
     var correct = msg.correct;
     var p = [];
-    for (var k in msg.result) {
+    for (var k in msg.score) {
       if (msg.result[k].answer === correct) {
         p.push({user: msg.users[k].name, ts: msg.result[k].ts,
                score: msg.score[k]});

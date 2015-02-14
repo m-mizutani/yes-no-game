@@ -43,6 +43,18 @@ div#status {
     text-align: right;
 }
 
+div#hero {
+    position: absolute;
+    z-index: -1;
+    top: 30px;
+    right: 30px;
+    width:  180px;
+    height: 120px;
+    font-size: 24pt;
+    font-weight: bold;
+    text-align: right;
+}
+
 div.content {
     font-size: 16pt;
 }
@@ -98,6 +110,7 @@ div#result {
     left: 15%;
     width: 70%;
     height: 80%;
+    overflow-y: hide;
 }
 div#result h2 {
     text-align: center;

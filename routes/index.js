@@ -7,12 +7,34 @@ var router = express.Router();
 // Global variables
 var socketio;
 var answer_buf;
+var hero_answer_buf;
 var current_q;
 var start_ts;
+var score_board = {};
 var basic_score = 40;
 var bonus_score = 60;
 var quiz_timeout = 60.0;
 
+var id_shinro = 'SHINRO';
+var id_shinpu = 'SHINPU';
+
+function get_max_answer(answer_buf) {
+  var answer_count = {};
+  for (var k in answer_buf) {
+    var a = answer_buf[k].answer;
+    if (answer_count[a] === undefined) {
+      answer_count[a] = 0;
+    }
+    answer_count[a]++;      
+  }
+  var answer_array = [];
+  for (var a in answer_count) {
+    answer_array.push({answer: a, count: answer_count[a]});
+  }
+  answer_array.sort(function(a,b) { return b.count - a.count; });
+  console.log(answer_array);
+  return answer_array[0].answer;
+}
 
 function event_handler(msg) {
   console.log(msg);
@@ -29,16 +51,31 @@ function event_handler(msg) {
       return false;
     }
     
-    var score_board = {};
-    for (k in answer_buf) {
+    score_board = {};
+    // 新郎新婦
+    var max_answer = get_max_answer(answer_buf);
+    for (var k in hero_answer_buf) {
+      var rec = hero_answer_buf[k];
+      if (rec.answer === max_answer) {
+        var ts = Math.min(rec.ts/1000, quiz_timeout);
+        var br = (quiz_timeout - ts) / quiz_timeout;
+        score_board[k] = ((bonus_score) * br);
+        score_board[k] = Math.floor(score_board[k] * 10) / 10; 
+        users[k].score += score_board[k];
+        users[k].score = Math.floor(users[k].score * 10) / 10;
+      }
+    }
+    
+    for (var k in answer_buf) {
+      var rec = answer_buf[k];
       if(score_board[k] === undefined) {
         score_board[k] = 0;
       }
-      var rec = answer_buf[k];
+
+      // その他
       if (rec.answer === current_q.a) {
         var ts = Math.min(rec.ts/1000, quiz_timeout);
         var br = (quiz_timeout - ts) / quiz_timeout;
-        console.log(br);
         score_board[k] = (basic_score + bonus_score * br);
         score_board[k] = Math.floor(score_board[k] * 10) / 10;
 
@@ -50,14 +87,19 @@ function event_handler(msg) {
         users[k].score = Math.floor(users[k].score * 10) / 10;
       }
     }
+    
     console.log(score_board);
     start_ts = undefined;
     dump_userdata();
 
     // Automatically send event to show result.
     setTimeout(function() {
+      for(var k in hero_answer_buf) {
+        answer_buf[k] = hero_answer_buf[k];
+      }
       socketio.sockets.emit('result', {result: answer_buf, users: users,
-                                       correct: current_q.a, score: score_board,
+                                       correct: current_q.a,
+                                       score: score_board,
                                        q: current_q});
     }, 2000);
     
@@ -83,6 +125,17 @@ function event_handler(msg) {
                                     data: d});
     return false;
 
+  case 'voted':
+    var d = [];
+    [id_shinro, id_shinpu].forEach(function(cid) {
+      d.push({user: users[cid].name,
+              answer: hero_answer_buf[cid].answer,
+              score: score_board[cid]});
+    });
+    socketio.sockets.emit('event', {name: 'voted',
+                                    data: d});
+    return false;
+    
   case 'reset':
     reset_score();
     return false;
@@ -201,6 +254,8 @@ function load_client_id() {
   }
   var id_list = raw_data.toString().split(/\n/);
   id_list.forEach(function(cid) { if (cid.length > 0) {users[cid] = {score: 0}; }});
+  users[id_shinro] = {score: 0, name: 'しょうた'};
+  users[id_shinpu] = {score: 0, name: 'なつか'};
   reset_data();
   reset_score();  
 }
@@ -231,6 +286,7 @@ if (load_userdata() === false) {
 }
 
 function reset_data() {
+  hero_answer_buf = {};
   answer_buf = {};
 }
 function reset_score() {
@@ -261,7 +317,13 @@ router.get('/c/:cid([0-9A-Z]+)', function(req, res) {
         if (current_q !== undefined && current_q.c[answer] !== undefined &&
             start_ts !== undefined) {
           var ts = new Date().getTime();
-          answer_buf[cid] = {answer: answer, ts: ts - start_ts};
+          
+          if (cid === id_shinro || cid === id_shinpu) {
+            hero_answer_buf[cid] = {answer: answer, ts: ts - start_ts};
+          } else {
+            answer_buf[cid] = {answer: answer, ts: ts - start_ts};
+          }
+          
           socketio.sockets.emit('update', answer_buf);
           msg = answer + 'で回答を受け付けました';
         } else {
