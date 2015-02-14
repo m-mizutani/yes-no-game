@@ -110,7 +110,7 @@ $(document).ready(function() {
     var txt = [];
     $('meter').css('width', '0px');
     for (var a in summary) {
-      $('meter#' + a).css('width', (summary[a] * 2) + 'px');
+      $('meter#' + a).css('width', (summary[a] * 4) + 'px');
       // $('span.count#' + a).text(summary[a] + '人');
     }
   });
